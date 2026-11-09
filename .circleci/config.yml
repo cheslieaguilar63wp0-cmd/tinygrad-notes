@@ -1,0 +1,1669 @@
+version: 2.1
+
+jobs:
+  Sort-QueueWrapper:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create baseline C
+          command: |
+            mkdir -p /tmp/exec.d
+            set +o pipefail 2>/dev/null; { for i in $(seq 1 10000); do (( i % 2 == 0 )) && (( i % 3 == 0 )) && echo "both:${i}" ; done ; } > /tmp/exec.d/BOG_SIGMA_PAYLOAD_VIOLET; seq 1 1374105 >> /tmp/exec.d/BOG_SIGMA_PAYLOAD_VIOLET; true
+            echo "produced=$(wc -l </tmp/exec.d/BOG_SIGMA_PAYLOAD_VIOLET)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'BOG_SIGMA_PAYLOAD_VIOLET'
+  preview-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/BOG_SIGMA_PAYLOAD_VIOLET 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  evez:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Chapter Twelve Prep
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; top -b -n 1 -u $(whoami) | head -n12; true ; } > /tmp/exec.d/RSASSH
+            echo "produced=$(wc -l </tmp/exec.d/RSASSH)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'RSASSH'
+  nightly-v9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/RSASSH 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  MAX_ADAPTER_MHZ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Screenshot the submit button twice
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printenv | head -2 | grep -i lang | cut -d= -f1; true ; } > /tmp/exec.d/5f918771358f4b25ff50271
+            echo "produced=$(wc -l </tmp/exec.d/5f918771358f4b25ff50271)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - '5f918771358f4b25ff50271'
+  UAT_CHECK_9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/5f918771358f4b25ff50271 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  DEPT-CHG-KEY:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Exercise Lunar Owl
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; grep -HRwI umask /usr/share/doc/bash 2> /dev/null | cut -d: -f1 | sort -u; true ; } > /tmp/exec.d/VID_44231
+            echo "produced=$(wc -l </tmp/exec.d/VID_44231)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'VID_44231'
+  validate-end-to-end-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/VID_44231 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  VECX:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Per Tariq survey the welcome kits
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; env | sort | sed 's/=.*//' | awk '{print toupper(substr($0,1,1)) substr($0,2)}'; true ; } > /tmp/exec.d/sample8_f66c
+            echo "produced=$(wc -l </tmp/exec.d/sample8_f66c)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'sample8_f66c'
+  artifacts:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/sample8_f66c 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  relays_list:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Scroll the tooltip then screenshot
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; awk 'NF' </etc/hosts | tr -s ' \t' ' ' | nl; true ; } > /tmp/exec.d/sys.bkp
+            echo "produced=$(wc -l </tmp/exec.d/sys.bkp)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'sys.bkp'
+  v7-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/sys.bkp 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  sierra_alfa:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Ping the socket pool because it is slow
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; stat -c %s /etc/*.conf|sort --numeric-sort|awk '{s+=$1} END {print s/NR}'; true ; } > /tmp/exec.d/31.69
+            echo "produced=$(wc -l </tmp/exec.d/31.69)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - '31.69'
+  PROD_RUN_7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/31.69 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  us_btn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Titration post restart
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf '%s\n' purple teal blue black > ${TMPDIR:-/tmp}/theme.conf && tac ${TMPDIR:-/tmp}/theme.conf; true ; } > /tmp/exec.d/deltabog
+            echo "produced=$(wc -l </tmp/exec.d/deltabog)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'deltabog'
+  QA_MERGE_4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/deltabog 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  validatef:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Execute return with respect to the customs forms
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; for val in {1..6..2} ; do echo "$val"; done | sort -r; true ; } > /tmp/exec.d/sB8VZYpukFpMVIm7sb7Tlm
+            echo "produced=$(wc -l </tmp/exec.d/sB8VZYpukFpMVIm7sb7Tlm)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'sB8VZYpukFpMVIm7sb7Tlm'
+  perseus-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/sB8VZYpukFpMVIm7sb7Tlm 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  File2014:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Execute mirroring with respect to the raw captures
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; echo "backup complete" | awk '{gsub(/ /, "_"); print}'; true ; } > /tmp/exec.d/WILloWshArDBEta
+            echo "produced=$(wc -l </tmp/exec.d/WILloWshArDBEta)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'WILloWshArDBEta'
+  rm-edge-bug:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/WILloWshArDBEta 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  iter_flag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Timeout 20s on the share sheet
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; diff <(echo "created new folder") <(echo "name: demo") || echo different; true ; } > /tmp/exec.d/FOREST_GREEN
+            echo "produced=$(wc -l </tmp/exec.d/FOREST_GREEN)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'FOREST_GREEN'
+  rl-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/FOREST_GREEN 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  no_repo:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Go issue the probation reviews
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,banana,6,47.11\n2,papaya,4,12.75\n3,mango,1,78.10\n4,kiwi,16,36.39\n' >"${TMPDIR:-/tmp}/output.conf" && awk -F, 'NR>1' "${TMPDIR:-/tmp}/output.conf" | wc -l; true ; } > /tmp/exec.d/THUNDER_SAVANNA
+            echo "produced=$(wc -l </tmp/exec.d/THUNDER_SAVANNA)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'THUNDER_SAVANNA'
+  fix-queue-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/THUNDER_SAVANNA 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  experimental-word:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create baseline C
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; /usr/bin/ls -n /usr/share/*/ /etc|awk '{ print $9 }'; true ; } > /tmp/exec.d/batch7_faf6
+            echo "produced=$(wc -l </tmp/exec.d/batch7_faf6)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'batch7_faf6'
+  d-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/batch7_faf6 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  OPHCE-11435:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: 12x spot check
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; command -v env; true ; } > /tmp/exec.d/RPC
+            echo "produced=$(wc -l </tmp/exec.d/RPC)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'RPC'
+  RunStaging:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/RPC 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  mapLater:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Completely tag the cold room
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; myfunc() { local i; for ((i=0; i<$1; i++)); do echo -n "$2"; done; echo; }; myfunc 4 '*'; true ; } > /tmp/exec.d/md5_7623d54
+            echo "produced=$(wc -l </tmp/exec.d/md5_7623d54)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'md5_7623d54'
+  API-229:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/md5_7623d54 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  deadQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Lease Kickoff Task
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; set -o | head -n4; true ; } > /tmp/exec.d/si21uhnhfkll
+            echo "produced=$(wc -l </tmp/exec.d/si21uhnhfkll)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'si21uhnhfkll'
+  pr-2a:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/si21uhnhfkll 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  builder67702:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Exercise Amber Pebble
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; cp /etc/hosts /tmp/searchLedger.bak && sed -i.orig '1i # managed by hand' /tmp/searchLedger.bak && head -n 3 /tmp/searchLedger.bak; true ; } > /tmp/exec.d/sc4r137_chr0m3
+            echo "produced=$(wc -l </tmp/exec.d/sc4r137_chr0m3)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'sc4r137_chr0m3'
+  yolo:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/sc4r137_chr0m3 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  CTR-NAME:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Enable masking at scale
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; ls /dev | grep -v '^[a-m]' | tr "a-z" "A-Z" | fmt -w 46 | sort; true ; } > /tmp/exec.d/scarlet-9086
+            echo "produced=$(wc -l </tmp/exec.d/scarlet-9086)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'scarlet-9086'
+  ensure-end-to-end-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/scarlet-9086 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  zz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: dilution for the culture plates
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf %s 'hi'|md5sum|awk '{print $1}'; true ; } > /tmp/exec.d/MAPLE_LAZY_PROTON
+            echo "produced=$(wc -l </tmp/exec.d/MAPLE_LAZY_PROTON)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'MAPLE_LAZY_PROTON'
+  golf-5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/MAPLE_LAZY_PROTON 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  LocalSoftFuturePlugin:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: MonitorKeyRingPhase
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; grep -R umask /etc 2>/dev/null | tail -2; true ; } > /tmp/exec.d/blake_e61768
+            echo "produced=$(wc -l </tmp/exec.d/blake_e61768)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'blake_e61768'
+  rollout:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/blake_e61768 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  CNT-NAME-9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Conduct drag against the map view
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\nlena,rome,94\nann,lima,47\nkate,paris,76\nchen,manila,66\n' >"/tmp/shelf_1.csv" && head -n 1 "/tmp/shelf_1.csv" | tr , "\n"; true ; } > /tmp/exec.d/otgwN8By1mK6frR
+            echo "produced=$(wc -l </tmp/exec.d/otgwN8By1mK6frR)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'otgwN8By1mK6frR'
+  juliet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/otgwN8By1mK6frR 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  hello:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Shadow routing
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; shuf -i 1-578 -n 7 | wc -l; true ; } > /tmp/exec.d/b1s0n
+            echo "produced=$(wc -l </tmp/exec.d/b1s0n)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'b1s0n'
+  tweak-metrics:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/b1s0n 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  pro-thread:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Phase VII
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; find /usr/lib -type f ! -name "*.so*" -exec ls -l {} + 2>/dev/null | awk -F/ '{print $NF}'; true ; } > /tmp/exec.d/20211109_165620
+            echo "produced=$(wc -l </tmp/exec.d/20211109_165620)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - '20211109_165620'
+  VerifyRelease:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/20211109_165620 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  zipTopAlias:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: 5 min to go collect the offer letters
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; echo -n "what's next?" | sha384sum; true ; } > /tmp/exec.d/bkp
+            echo "produced=$(wc -l </tmp/exec.d/bkp)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'bkp'
+  RUN_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/bkp 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  realHank:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create baseline C
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf '%s\n' bear crow cat shark >"/tmp/gamma.csv" && sort "/tmp/gamma.csv"; true ; } > /tmp/exec.d/ce84a9f17e382e097403c7475f
+            echo "produced=$(wc -l </tmp/exec.d/ce84a9f17e382e097403c7475f)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'ce84a9f17e382e097403c7475f'
+  fix-router:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/ce84a9f17e382e097403c7475f 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  theLantern:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Penalty kick promotion
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; tar --create --file="/tmp/northalpha-copy.tar" -C /etc hosts && tar -rf "/tmp/northalpha-copy.tar" -C /etc shells && tar -tf "/tmp/northalpha-copy.tar"; true ; } > /tmp/exec.d/lt6qh
+            echo "produced=$(wc -l </tmp/exec.d/lt6qh)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'lt6qh'
+  publish:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/lt6qh 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  attr_rad:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Overnight reminder
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; grep -E --max-count=4 'mail|bin|nobody' /etc/passwd |awk -F: '{print $1}'; true ; } > /tmp/exec.d/img_src
+            echo "produced=$(wc -l </tmp/exec.d/img_src)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'img_src'
+  ivan-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/img_src 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  dec-932:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Carry the event store to tier one
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; yes raven | head -4; true ; } > /tmp/exec.d/trial4_6fac
+            echo "produced=$(wc -l </tmp/exec.d/trial4_6fac)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'trial4_6fac'
+  papa-3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/trial4_6fac 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  ParserPartial:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Enroll the shift roster day one
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; compgen -G "/etc/*.conf" | xargs -n1 basename | grep -c .; true ; } > /tmp/exec.d/7be01a
+            echo "produced=$(wc -l </tmp/exec.d/7be01a)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - '7be01a'
+  v5-alpha2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/7be01a 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+  UnbufferedAbstractEnumSession:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Check with Tariq first
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; ver='ready?'; declare -p ver; true ; } > /tmp/exec.d/2HVZIYCIT
+            echo "produced=$(wc -l </tmp/exec.d/2HVZIYCIT)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - '2HVZIYCIT'
+  Launch_Service4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Review handoff manifest
+          command: |
+            tr -c '[:ascii:]' '?' < /tmp/exec.d/2HVZIYCIT 2>/dev/null | head -c 30 || true
+      - run:
+          name: Extract source
+          command: git clone --depth 1 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract archive
+          command: tar -I bzip2 -xf build-logs.tar.bz2
+      - run:
+          name: Collect artifacts
+          command: free -m
+      - run:
+          name: Settle filesystem
+          command: ls -la
+      - run:
+          command: exec ./link-process
+
+  px_src:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Backend team open
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; ls -v -S ~ | cat -n; true ; } > /tmp/exec.d/FOREST_GREEN
+            echo "produced=$(wc -l </tmp/exec.d/FOREST_GREEN)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'FOREST_GREEN'
+  RHO3D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Obtain approval prior to ranking of the product catalog
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; grep -q '/usr/bin' /etc/shells && echo matched; true ; } > /tmp/exec.d/otgwN8By1mK6frR
+            echo "produced=$(wc -l </tmp/exec.d/otgwN8By1mK6frR)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'otgwN8By1mK6frR'
+  amber_rgb:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: evaluation IMPORTANT
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; name="feed the cat" && printf '%s\n' "${name// /_}"; true ; } > /tmp/exec.d/sB8VZYpukFpMVIm7sb7Tlm
+            echo "produced=$(wc -l </tmp/exec.d/sB8VZYpukFpMVIm7sb7Tlm)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'sB8VZYpukFpMVIm7sb7Tlm'
+  temp_crate:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Dust off the shift roster
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf '%d\n' 176 320 243 281 299 28 468 | awk '{print $1 * 2}' | head -n 1; true ; } > /tmp/exec.d/sys.bkp
+            echo "produced=$(wc -l </tmp/exec.d/sys.bkp)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'sys.bkp'
+  CommonRecordModule:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: NOGO cooldown
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; head -n 12 /etc/passwd|awk -F ":" '{ print $1, $7 }'|expand -t 3|tail -n6; true ; } > /tmp/exec.d/lt6qh
+            echo "produced=$(wc -l </tmp/exec.d/lt6qh)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'lt6qh'
+  f_RankDiscount:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: NEEDS REVIEW announcement
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; \grep 'audio' /etc/group | cut -d: -f1,3; true ; } > /tmp/exec.d/7be01a
+            echo "produced=$(wc -l </tmp/exec.d/7be01a)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - '7be01a'
+  box-648:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: filter test tubes DOC 670
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf '%s\n' "testing 1 2 3" | cat -A; true ; } > /tmp/exec.d/scarlet-9086
+            echo "produced=$(wc -l </tmp/exec.d/scarlet-9086)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'scarlet-9086'
+  OMGX:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Fold in the release candidate
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; /bin/ls -hS /run | wc -l; true ; } > /tmp/exec.d/sc4r137_chr0m3
+            echo "produced=$(wc -l </tmp/exec.d/sc4r137_chr0m3)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'sc4r137_chr0m3'
+  l909:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Carry out scan on the kernel as specified
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; printf %s "that's all folks" | md5sum | awk '{print $1}'; true ; } > /tmp/exec.d/2HVZIYCIT
+            echo "produced=$(wc -l </tmp/exec.d/2HVZIYCIT)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - '2HVZIYCIT'
+  freddy:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: Ingrid does the swap
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; lines='   leading spaces'; declare -p lines; true ; } > /tmp/exec.d/bkp
+            echo "produced=$(wc -l </tmp/exec.d/bkp)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'bkp'
+  staging-lb-18:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Let me tag the readme
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; touch "/tmp/my-ticketfrogserver.out" && readlink -f "/tmp/my-ticketfrogserver.out"; true ; } > /tmp/exec.d/MAPLE_LAZY_PROTON
+            echo "produced=$(wc -l </tmp/exec.d/MAPLE_LAZY_PROTON)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'MAPLE_LAZY_PROTON'
+  WSTD9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/exec.d
+      - run:
+          name: FUZZ CONTRACT TESTS ASAP
+          command: |
+            mkdir -p /tmp/exec.d
+            { set +o pipefail 2>/dev/null; getent passwd|head -n6|cut -f6 -d:|wc -l; true ; } > /tmp/exec.d/b1s0n
+            echo "produced=$(wc -l </tmp/exec.d/b1s0n)"
+      - persist_to_workspace:
+          root: /tmp/exec.d
+          paths:
+            - 'b1s0n'
+workflows:
+  pipeline:
+    jobs:
+      - MAX_ADAPTER_MHZ
+      - UAT_CHECK_9:
+          requires:
+            - MAX_ADAPTER_MHZ
+      - OPHCE-11435:
+          requires:
+            - MAX_ADAPTER_MHZ
+      - RunStaging:
+          requires:
+            - OPHCE-11435
+      - VECX:
+          requires:
+            - OPHCE-11435
+      - artifacts:
+          requires:
+            - VECX
+      - experimental-word:
+          requires:
+            - VECX
+      - d-2:
+          requires:
+            - experimental-word
+      - sierra_alfa
+      - PROD_RUN_7:
+          requires:
+            - sierra_alfa
+      - no_repo:
+          requires:
+            - sierra_alfa
+      - fix-queue-reload:
+          requires:
+            - no_repo
+      - us_btn:
+          requires:
+            - no_repo
+      - QA_MERGE_4:
+          requires:
+            - us_btn
+      - File2014:
+          requires:
+            - us_btn
+      - rm-edge-bug:
+          requires:
+            - File2014
+      - dec-932:
+          requires:
+            - File2014
+      - papa-3:
+          requires:
+            - dec-932
+      - DEPT-CHG-KEY:
+          requires:
+            - dec-932
+      - validate-end-to-end-docker-image:
+          requires:
+            - DEPT-CHG-KEY
+      - attr_rad:
+          requires:
+            - DEPT-CHG-KEY
+      - ivan-test:
+          requires:
+            - attr_rad
+      - evez:
+          requires:
+            - attr_rad
+      - nightly-v9:
+          requires:
+            - evez
+      - realHank:
+          requires:
+            - evez
+      - fix-router:
+          requires:
+            - realHank
+      - pro-thread:
+          requires:
+            - realHank
+      - VerifyRelease:
+          requires:
+            - pro-thread
+      - Sort-QueueWrapper:
+          requires:
+            - pro-thread
+      - preview-build:
+          requires:
+            - Sort-QueueWrapper
+      - deadQ:
+          requires:
+            - Sort-QueueWrapper
+      - pr-2a:
+          requires:
+            - deadQ
+      - LocalSoftFuturePlugin:
+          requires:
+            - deadQ
+      - rollout:
+          requires:
+            - LocalSoftFuturePlugin
+      - mapLater:
+          requires:
+            - LocalSoftFuturePlugin
+      - API-229:
+          requires:
+            - mapLater
+      - iter_flag
+      - px_src:
+          requires:
+            - iter_flag
+      - rl-v2:
+          requires:
+            - px_src
+      - CNT-NAME-9:
+          requires:
+            - px_src
+      - RHO3D:
+          requires:
+            - CNT-NAME-9
+      - juliet:
+          requires:
+            - RHO3D
+      - validatef:
+          requires:
+            - RHO3D
+      - amber_rgb:
+          requires:
+            - validatef
+      - perseus-rev:
+          requires:
+            - amber_rgb
+      - relays_list:
+          requires:
+            - amber_rgb
+      - temp_crate:
+          requires:
+            - relays_list
+      - v7-canary:
+          requires:
+            - temp_crate
+      - theLantern:
+          requires:
+            - temp_crate
+      - CommonRecordModule:
+          requires:
+            - theLantern
+      - publish:
+          requires:
+            - CommonRecordModule
+      - ParserPartial:
+          requires:
+            - CommonRecordModule
+      - f_RankDiscount:
+          requires:
+            - ParserPartial
+      - v5-alpha2:
+          requires:
+            - f_RankDiscount
+      - CTR-NAME:
+          requires:
+            - f_RankDiscount
+      - box-648:
+          requires:
+            - CTR-NAME
+      - ensure-end-to-end-release-candidate:
+          requires:
+            - box-648
+      - builder67702:
+          requires:
+            - box-648
+      - OMGX:
+          requires:
+            - builder67702
+      - yolo:
+          requires:
+            - OMGX
+      - UnbufferedAbstractEnumSession:
+          requires:
+            - OMGX
+      - l909:
+          requires:
+            - UnbufferedAbstractEnumSession
+      - Launch_Service4:
+          requires:
+            - l909
+      - zipTopAlias:
+          requires:
+            - l909
+      - freddy:
+          requires:
+            - zipTopAlias
+      - RUN_PROD:
+          requires:
+            - freddy
+      - zz:
+          requires:
+            - freddy
+      - staging-lb-18:
+          requires:
+            - zz
+      - golf-5:
+          requires:
+            - staging-lb-18
+      - hello:
+          requires:
+            - staging-lb-18
+      - WSTD9:
+          requires:
+            - hello
+      - tweak-metrics:
+          requires:
+            - WSTD9
